@@ -35,7 +35,9 @@ class UpdateRank extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'pay_grade' => 'required',
+            'abbreviation' => 'required',
         ];
     }
 }

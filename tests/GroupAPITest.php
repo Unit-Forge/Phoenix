@@ -73,7 +73,7 @@ class GroupAPITest extends TestCase
         \Artisan::call('migrate:refresh',['--seed' => true]);
 
         // Create user and attach correct role
-        $role = \Phoenix\Models\Auth\Role::whereName('recordsphpunit')->first();
+        $role = \Phoenix\Models\Auth\Role::whereName('records')->first();
         $user = \Phoenix\Models\User::create(['email' => 'test1@fake.com','password'=>bcrypt('helloworld')]);
         $user->attachRole($role);
 

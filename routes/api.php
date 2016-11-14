@@ -61,6 +61,7 @@ Route::group(['prefix' => 'unit'], function() {
 
         // Authenticated Methods
     Route::group(['middleware' => 'auth:api'], function () {
+        // Groups
         Route::post('groups', 'Frontend\API\Unit\Group\GroupController@create')->name('api.unit.group.create');
         Route::put('groups/{group}', 'Frontend\API\Unit\Group\GroupController@update')->name('api.unit.group.update');
         Route::delete('groups/{group}', 'Frontend\API\Unit\Group\GroupController@delete')->name('api.unit.group.delete');

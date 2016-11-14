@@ -5,6 +5,7 @@ namespace Phoenix\Http\Controllers\Frontend\API\Unit\Group;
 use Illuminate\Http\Request;
 use Phoenix\Http\Controllers\Controller;
 use Phoenix\Http\Requests\Unit\Group\CreateGroup;
+use Phoenix\Http\Requests\Unit\Group\DeleteGroup;
 use Phoenix\Http\Requests\Unit\Group\UpdateGroup;
 use Phoenix\Models\Unit\Group\Group;
 
@@ -75,9 +76,10 @@ class GroupController extends Controller
      * Deletes a Group based on ID
      *
      * @param Group $group
+     * @param DeleteGroup $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Group $group)
+    public function delete(Group $group, DeleteGroup $request)
     {
         if($group->delete())
         {
