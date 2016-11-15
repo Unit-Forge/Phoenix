@@ -4,6 +4,7 @@ namespace Phoenix\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Phoenix\Models\User;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,8 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        User::creating(function($user) {
+            $user->uuid = \Uuid::generate();
+        });
     }
 }

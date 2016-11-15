@@ -15,13 +15,15 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('group_id')->nullable();
+            $table->unsignedInteger('group_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('leader')->default(false);
             $table->boolean('primary')->default(true);
             $table->timestamps();
+
+
         });
     }
 

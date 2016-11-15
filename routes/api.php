@@ -46,6 +46,13 @@ Route::group(['prefix' => 'documentation'], function (){
 });
 
 Route::group(['prefix' => 'unit'], function() {
+    // Files
+
+    Route::get('files/awards', 'Frontend\API\Unit\File\AwardController@index')->name('api.unit.awards');
+    Route::get('files/awards/{award}', 'Frontend\API\Unit\File\AwardController@get')->name('api.unit.awards.get');
+    Route::get('files', 'Frontend\API\Unit\File\FileController@index')->name('api.unit.files');
+    Route::get('files/{file}', 'Frontend\API\Unit\File\FileController@get')->name('api.unit.files.get');
+
     // Groups
     Route::get('groups', 'Frontend\API\Unit\Group\GroupController@index')->name('api.unit.group');
     Route::get('groups/{group}', 'Frontend\API\Unit\Group\GroupController@get')->name('api.unit.group.get');
@@ -57,6 +64,7 @@ Route::group(['prefix' => 'unit'], function() {
     // Ranks
     Route::get('ranks', 'Frontend\API\Unit\RankController@index')->name('api.unit.rank');
     Route::get('ranks/{rank}', 'Frontend\API\Unit\RankController@get')->name('api.unit.rank.get');
+
 
 
         // Authenticated Methods
@@ -73,6 +81,14 @@ Route::group(['prefix' => 'unit'], function() {
         Route::post('ranks', 'Frontend\API\Unit\RankController@create')->name('api.unit.rank.create');
         Route::put('ranks/{rank}', 'Frontend\API\Unit\RankController@update')->name('api.unit.rank.update');
         Route::delete('ranks/{rank}', 'Frontend\API\Unit\RankController@delete')->name('api.unit.rank.delete');
+
+        // Files
+        Route::post('files/awards', 'Frontend\API\Unit\File\AwardController@create')->name('api.unit.awards.create');
+        Route::put('files/awards/{award}', 'Frontend\API\Unit\File\AwardController@update')->name('api.unit.awards.update');
+        Route::delete('files/awards/{award}', 'Frontend\API\Unit\File\AwardController@delete')->name('api.unit.awards.delete');
+        Route::post('files', 'Frontend\API\Unit\File\FileController@create')->name('api.unit.files.create');
+        Route::put('files/{file}', 'Frontend\API\Unit\File\FileController@update')->name('api.unit.files.update');
+        Route::delete('files/{file}', 'Frontend\API\Unit\File\FileController@delete')->name('api.unit.files.delete');
     });
 
 });

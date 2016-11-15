@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('steam_id')->nullable();
+            $table->uuid('uuid');
 
             $table->rememberToken();
             $table->timestamps();

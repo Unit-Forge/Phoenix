@@ -17,6 +17,9 @@ class CreateBadConductsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('file_id');
             $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -10,6 +10,8 @@ use Phoenix\Models\Unit\Documentation\Section;
 use Phoenix\Models\Unit\Group\Group;
 use Phoenix\Models\Unit\Group\Position;
 use Phoenix\Models\Unit\Rank;
+use Phoenix\Models\Unit\File\File;
+use Phoenix\Models\Unit\File\Award;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -39,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('group', Group::class);
         Route::model('position', Position::class);
         Route::model('rank', Rank::class);
+        Route::model('award', Award::class);
+        Route::model('file', File::class);
 
     }
 

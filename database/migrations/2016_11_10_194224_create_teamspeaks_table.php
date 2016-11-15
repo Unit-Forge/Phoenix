@@ -19,6 +19,9 @@ class CreateTeamspeaksTable extends Migration
             $table->string('uuid');
             $table->string('description');
             $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

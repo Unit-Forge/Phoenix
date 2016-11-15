@@ -18,13 +18,21 @@ class CreateAwardsTable extends Migration
             $table->string('name');
             $table->string('details')->nullable();
             $table->string('link')->nullable();
-            $table->date('date');
             $table->timestamps();
         });
 
         Schema::create('award_file', function (Blueprint $table) {
             $table->unsignedInteger('award_id');
             $table->unsignedInteger('file_id');
+            $table->date('reason')->nullable();
+            $table->date('date_awarded');
+            $table->primary(['award_id', 'file_id']);
+
+            $table->foreign('award_id')->references('id')->on('awards')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('file_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

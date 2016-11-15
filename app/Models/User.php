@@ -33,6 +33,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -40,4 +42,6 @@ class User extends Authenticatable
     {
         return $this->hasOne('Phoenix\Models\Unit\File\File');
     }
+
+
 }

@@ -20,6 +20,9 @@ class CreateServiceHistoriesTable extends Migration
             $table->string('message');
             $table->string('link')->nullable();
             $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

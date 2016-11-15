@@ -15,4 +15,9 @@ class File extends Model
         'name', 'status', 'searchable_name',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('Phoenix/Models/User');
+    }
+
 }
