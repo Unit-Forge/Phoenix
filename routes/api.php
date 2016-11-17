@@ -21,8 +21,17 @@ Route::get('users', 'Frontend\API\UserController@index')->name('api.users');
 Route::get('users/{user}', 'Frontend\API\UserController@show')->name('api.users');
 Route::post('users', 'Frontend\API\UserController@create')->name('api.users.create');
 
+
+// Authenticated Methods
+Route::group(['middleware'=>'auth:api'], function () {
+    Route::post('user/teamspeak', 'Frontend\API\User\TeamspeakController@create')->name('api.user.teamspeak.create');
+    Route::delete('user/teamspeak/{teamspeak}', 'Frontend\API\User\TeamspeakController@delete')->name('api.user.teamspeak.delete');
+});
+
 // Documentation
 Route::group(['prefix' => 'documentation'], function (){
+
+    Route::get('sidebar', 'Frontend\Unit\Documentation\DocumentationController@getSidebar')->name('api.documentation.sidebar');
 
     Route::get('categories', 'Frontend\API\Unit\Documentation\CategoryController@index')->name('api.documentation.categories');
     Route::get('categories/{category}', 'Frontend\API\Unit\Documentation\CategoryController@get')->name('api.documentation.categories.get');
@@ -83,12 +92,17 @@ Route::group(['prefix' => 'unit'], function() {
         Route::delete('ranks/{rank}', 'Frontend\API\Unit\RankController@delete')->name('api.unit.rank.delete');
 
         // Files
+
         Route::post('files/awards', 'Frontend\API\Unit\File\AwardController@create')->name('api.unit.awards.create');
         Route::put('files/awards/{award}', 'Frontend\API\Unit\File\AwardController@update')->name('api.unit.awards.update');
         Route::delete('files/awards/{award}', 'Frontend\API\Unit\File\AwardController@delete')->name('api.unit.awards.delete');
         Route::post('files', 'Frontend\API\Unit\File\FileController@create')->name('api.unit.files.create');
         Route::put('files/{file}', 'Frontend\API\Unit\File\FileController@update')->name('api.unit.files.update');
         Route::delete('files/{file}', 'Frontend\API\Unit\File\FileController@delete')->name('api.unit.files.delete');
+        Route::post('files/{file}/awards/{award}', 'Frontend\API\Unit\File\FileController@addAward')->name('api.unit.files.awards.add');
+        Route::delete('files/{file}/awards/{award}', 'Frontend\API\Unit\File\FileController@removeAward')->name('api.unit.files.awards.remove');
+        Route::post('files/{file}/service-history', 'Frontend\API\Unit\File\FileController@addServiceHistory')->name('api.unit.files.service-history.add');
+        Route::delete('files/{file}/service-history/{serviceHistory}', 'Frontend\API\Unit\File\FileController@removeServiceHistory')->name('api.unit.files.service-history.remove');
     });
 
 });

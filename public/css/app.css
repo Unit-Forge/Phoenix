@@ -5766,4 +5766,19 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+.glyphicon {
+  margin-right: 10px; }
+
+.panel-body.documentation {
+  padding: 0px; }
+
+.panel-body.documentation table tr td {
+  padding-left: 15px; }
+
+.panel-body.documentation .table {
+  margin-bottom: 0px; }
+
+a.documentation {
+  text-decoration: none; }
+
 /*# sourceMappingURL=app.css.map */

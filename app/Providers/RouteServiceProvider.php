@@ -12,6 +12,8 @@ use Phoenix\Models\Unit\Group\Position;
 use Phoenix\Models\Unit\Rank;
 use Phoenix\Models\Unit\File\File;
 use Phoenix\Models\Unit\File\Award;
+use Phoenix\Models\Unit\File\ServiceHistory;
+use Phoenix\Models\User\Teamspeak;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -31,8 +33,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
 
         Route::model('category', Category::class);
@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('rank', Rank::class);
         Route::model('award', Award::class);
         Route::model('file', File::class);
+        Route::model('serviceHistory', ServiceHistory::class);
+        Route::model('teamspeak', Teamspeak::class);
 
     }
 

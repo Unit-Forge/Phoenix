@@ -4,12 +4,22 @@ namespace Phoenix\Http\Controllers\Frontend\API\Unit\File;
 
 use Illuminate\Http\Request;
 use Phoenix\Http\Controllers\Controller;
+use Phoenix\Http\Requests\Unit\File\Award\AddAwardToFile;
+use Phoenix\Http\Requests\Unit\File\Award\RemoveAwardToFile;
 use Phoenix\Http\Requests\Unit\File\CreateFile;
 use Phoenix\Http\Requests\Unit\File\DeleteFile;
+use Phoenix\Http\Requests\Unit\File\ServiceHistory\AddServiceHistoryToFile;
+use Phoenix\Http\Requests\Unit\File\ServiceHistory\RemoveServiceHistoryToFile;
 use Phoenix\Http\Requests\Unit\File\UpdateFile;
+use Phoenix\Models\Unit\File\Award;
 use Phoenix\Models\Unit\File\File;
+use Phoenix\Models\Unit\File\ServiceHistory;
 use Phoenix\Models\User;
 
+/**
+ * Class FileController
+ * @package Phoenix\Http\Controllers\Frontend\API\Unit\File
+ */
 class FileController extends Controller
 {
     /**
@@ -92,4 +102,68 @@ class FileController extends Controller
             return response('',400);
         }
     }
+
+
+    /**
+     * Add an Award to a File
+     *
+     * @param File $file
+     * @param Award $award
+     * @param AddAwardToFile $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addAward(File $file, Award $award, AddAwardToFile $request)
+    {
+        $file->awards()->attach($award->id, ['reason' => $request->reason, 'date_awarded' => $request->date_awarded]);
+        return response()->json(['message' => 'Award Added Successfully']);
+    }
+
+
+    /**
+     * Remove an Award from a File
+     *
+     * @param File $file
+     * @param Award $award
+     * @param RemoveAwardToFile $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeAward(File $file, Award $award, RemoveAwardToFile $request)
+    {
+        $file->awards()->detach($award->id);
+        return response()->json(['message' => 'Award Removed Successfully']);
+    }
+
+    /**
+     * Adds Service History to a File
+     *
+     * @param File $file
+     * @param AddServiceHistoryToFile $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addServiceHistory(File $file, AddServiceHistoryToFile $request)
+    {
+        $file->serviceHistory()->create($request->all());
+        return response()->json(['message' => 'Service History added Successfully']);
+    }
+
+    /**
+     * Remove Service History from a File
+     *
+     * @param File $file
+     * @param ServiceHistory $serviceHistory
+     * @param RemoveServiceHistoryToFile $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeServiceHistory(File $file, ServiceHistory $serviceHistory, RemoveServiceHistoryToFile $request)
+    {
+        if($serviceHistory->delete())
+        {
+            return response()->json(['message' => 'Service History deleted successfully']);
+        } else {
+            return response()->setStatusCode(500)->json(['message' => 'Unable to delete service history entree, try again later.']);
+        }
+
+    }
+
+
 }

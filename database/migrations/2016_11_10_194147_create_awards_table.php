@@ -24,7 +24,7 @@ class CreateAwardsTable extends Migration
         Schema::create('award_file', function (Blueprint $table) {
             $table->unsignedInteger('award_id');
             $table->unsignedInteger('file_id');
-            $table->date('reason')->nullable();
+            $table->string('reason')->nullable();
             $table->date('date_awarded');
             $table->primary(['award_id', 'file_id']);
 

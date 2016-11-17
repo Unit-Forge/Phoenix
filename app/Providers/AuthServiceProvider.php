@@ -28,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
+
+        Gate::define('delete-teamspeak', function ($user, $teamspeak) {
+            return $user->id == $teamspeak->user_id;
+        });
     }
 }

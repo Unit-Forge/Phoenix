@@ -1,10 +1,5 @@
 <style scoped>
-.glyphicon { margin-right:10px; }
-.panel-body { padding:0px; }
-.panel-body table tr td { padding-left: 15px }
-.panel-body .table {margin-bottom: 0px; }
 
-a { text-decoration: none;}
 </style>
 
 <template>
@@ -46,43 +41,34 @@ a { text-decoration: none;}
          */
         data() {
             return {
-                sidebar: [{
-                    id: "basic-training",
-                    slug: "#basic-training",
-                    name: "Basic Training",
-                    icon: "fa fa-user-circle-o",
-                    submenu: [{
-                        icon: "fa fa-bluetooth",
-                        link: "#",
-                        name: "Starter",
-                    },
-                    {
-                        icon: "",
-                        link: "#",
-                        name: "Starter Menu 2",
-                    },
-                    {
-                        icon: "",
-                        link: "#",
-                        name: "Starter Menu 3",
-                    },
-                    {
-                        icon: "fa fa-comments",
-                        link: "#",
-                        name: "Starter Menu 4",
-                    },
-                    ]
-                },
-                {
-                    id: "advanced-training",
-                    slug: "#advanced-training",
-                    name: "Advanced Training",
-                    icon: "fa fa-briefcase",
-                    submenu: []
-                }],
-
+                sidebar: [],
             };
         },
-        methods: {}
+
+        /**
+         * Prepare the component (Vue 2.x).
+         */
+        mounted() {
+            this.prepareComponent();
+        },
+
+        methods: {
+            /**
+             * Prepare the component (Vue 2.x).
+             */
+            prepareComponent() {
+                this.getSidebar();
+            },
+
+            /**
+             * Get the documentation sidebar
+             */
+            getSidebar() {
+                this.$http.get('/documentation/sidebar')
+                        .then(response => {
+                            this.sidebar = response.data;
+                        });
+            },
+        }
     }
 </script>

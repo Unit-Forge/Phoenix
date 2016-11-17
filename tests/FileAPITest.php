@@ -134,4 +134,136 @@ class FileAPITest extends TestCase
         $this->json('POST','api/unit/files', ['name'=> 'TheElector', 'user' => $userTest->uuid])
             ->assertResponseStatus('401');
     }
+
+    /**
+     * Tests adding an award to a file
+     * @group api-files-award
+     */
+    public function testAddAward()
+    {
+        // Seed the Database for roles
+        \Artisan::call('migrate:refresh',['--seed' => true]);
+
+        // Create user and attach correct role
+        $role = \Phoenix\Models\Auth\Role::whereName('records')->first();
+        $user = \Phoenix\Models\User::create(['email' => 'test1@fake.com','password'=>bcrypt('helloworld')]);
+        $user->attachRole($role);
+
+        $userTest = \Phoenix\Models\User::create(['email' => 'test2@fake.com','password'=>bcrypt('helloworld')]);
+
+        // Lets create some models to test
+        $file = $userTest->file()->create([
+            'name' => 'TheElector',
+            'first_name' => 'James',
+            'last_name' => 'Wilco'
+        ]);
+
+        // Lets create some models to test
+        $award = \Phoenix\Models\Unit\File\Award::create(['name' => 'Oscar']);
+
+        // Actual Test
+        $this->actingAs($user,'api')
+            ->json('POST','api/unit/files/'.$file->id.'/awards/'.$award->id, ['reason'=> 'For an outstanding performance', 'date_awarded' => '2016-05-10'])
+            ->seeJson(['message' => 'Award Added Successfully']);
+
+    }
+
+    /**
+     * Tests adding an award to a file
+     * @group api-files-award
+     */
+    public function testRemoveAward()
+    {
+        // Seed the Database for roles
+        \Artisan::call('migrate:refresh',['--seed' => true]);
+
+        // Create user and attach correct role
+        $role = \Phoenix\Models\Auth\Role::whereName('records')->first();
+        $user = \Phoenix\Models\User::create(['email' => 'test1@fake.com','password'=>bcrypt('helloworld')]);
+        $user->attachRole($role);
+
+        $userTest = \Phoenix\Models\User::create(['email' => 'test2@fake.com','password'=>bcrypt('helloworld')]);
+
+        // Lets create some models to test
+        $file = $userTest->file()->create([
+            'name' => 'TheElector',
+            'first_name' => 'James',
+            'last_name' => 'Wilco'
+        ]);
+
+        // Lets create some models to test
+        $award = \Phoenix\Models\Unit\File\Award::create(['name' => 'Oscar']);
+
+        // Attach the award to the file
+        $file->awards()->attach($award->id, ['reason' => 'reason', 'date_awarded' => '2016-05-05']);
+
+        // Actual Test
+        $this->actingAs($user,'api')
+            ->json('DELETE','api/unit/files/'.$file->id.'/awards/'.$award->id)
+            ->seeJson(['message' => 'Award Removed Successfully']);
+
+    }
+
+    /**
+     * Tests adding an service-history to a file
+     * @group api-files-serviceHistory
+     */
+    public function testAddServiceHistory()
+    {
+        // Seed the Database for roles
+        \Artisan::call('migrate:refresh',['--seed' => true]);
+
+        // Create user and attach correct role
+        $role = \Phoenix\Models\Auth\Role::whereName('records')->first();
+        $user = \Phoenix\Models\User::create(['email' => 'test1@fake.com','password'=>bcrypt('helloworld')]);
+        $user->attachRole($role);
+
+        $userTest = \Phoenix\Models\User::create(['email' => 'test2@fake.com','password'=>bcrypt('helloworld')]);
+
+        // Lets create some models to test
+        $file = $userTest->file()->create([
+            'name' => 'TheElector',
+            'first_name' => 'James',
+            'last_name' => 'Wilco'
+        ]);
+
+        // Actual Test
+        $this->actingAs($user,'api')
+            ->json('POST','api/unit/files/'.$file->id.'/service-history', ['date'=> '2016-05-15', 'message' => 'Enlisted into Unit'])
+            ->seeJson(['message' => 'Service History added Successfully']);
+
+    }
+
+    /**
+     * Tests adding an service-history to a file
+     * @group api-files-serviceHistory
+     */
+    public function testRemoveServiceHistory()
+    {
+        // Seed the Database for roles
+        \Artisan::call('migrate:refresh',['--seed' => true]);
+
+        // Create user and attach correct role
+        $role = \Phoenix\Models\Auth\Role::whereName('records')->first();
+        $user = \Phoenix\Models\User::create(['email' => 'test1@fake.com','password'=>bcrypt('helloworld')]);
+        $user->attachRole($role);
+
+        $userTest = \Phoenix\Models\User::create(['email' => 'test2@fake.com','password'=>bcrypt('helloworld')]);
+
+        // Lets create some models to test
+        $file = $userTest->file()->create([
+            'name' => 'TheElector',
+            'first_name' => 'James',
+            'last_name' => 'Wilco'
+        ]);
+
+        $serviceHistory = $file->serviceHistory()->create(['date'=> '2016-05-15', 'message' => 'Enlisted into Unit']);
+
+        // Actual Test
+        $this->actingAs($user,'api')
+            ->json('DELETE','api/unit/files/'.$file->id.'/service-history/'.$serviceHistory->id)
+            ->seeJson(['message' => 'Service History deleted successfully']);
+
+    }
+
 }

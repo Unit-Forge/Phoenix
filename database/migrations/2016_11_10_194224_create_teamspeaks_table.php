@@ -15,12 +15,12 @@ class CreateTeamspeaksTable extends Migration
     {
         Schema::create('teamspeaks', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('file_id');
+            $table->unsignedInteger('user_id');
             $table->string('uuid');
             $table->string('description');
             $table->timestamps();
 
-            $table->foreign('file_id')->references('id')->on('files')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

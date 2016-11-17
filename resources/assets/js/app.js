@@ -15,7 +15,7 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 
-Vue.component('sidebar', require('./components/unit/Sidebar.vue'));
+Vue.component('doc-sidebar', require('./components/unit/documentation/Sidebar.vue'));
 
 Vue.component('passport-clients', require('./components/passport/Clients.vue'));
 

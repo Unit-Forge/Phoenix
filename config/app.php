@@ -169,6 +169,7 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
 
         //
 
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
 
     ],
 

@@ -18,3 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+// Documentation
+Route::group(['prefix' => 'documentation'], function (){
+    Route::get('/', 'Frontend\Unit\Documentation\DocumentationController@index')->name('documentation.index');
+    Route::get('/sections/{section}', 'Frontend\Unit\Documentation\DocumentationController@getSection')->name('documentation.section.get');
+    Route::get('/sections/{section}/{page}', 'Frontend\Unit\Documentation\DocumentationController@getPage')->name('documentation.section.page.get');
+
+    Route::get('sidebar', 'Frontend\Unit\Documentation\DocumentationController@getSidebar')->name('documentation.sidebar');
+
+});

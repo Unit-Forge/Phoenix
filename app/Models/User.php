@@ -43,5 +43,10 @@ class User extends Authenticatable
         return $this->hasOne('Phoenix\Models\Unit\File\File');
     }
 
+    public function teamspeak()
+    {
+        return $this->hasMany('Phoenix\Models\User\Teamspeak');
+    }
+
 
 }

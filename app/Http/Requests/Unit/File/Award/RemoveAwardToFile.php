@@ -1,10 +1,10 @@
 <?php
 
-namespace Phoenix\Http\Requests\Unit\File\Application;
+namespace Phoenix\Http\Requests\Unit\File\Award;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteApplication extends FormRequest
+class RemoveAwardToFile extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,18 @@ class DeleteApplication extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if(\Auth::guest())
+        {
+            return false;
+        } elseif (\Auth::User()->hasRole('superadmin'))
+        {
+            return true;
+        } elseif(\Auth::User()->hasRole('records'))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
